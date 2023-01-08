@@ -5,42 +5,65 @@ using namespace std;
 int a = 1;
 int b = 2;
 
+bool isSame;
+bool isDifferent;
+bool isGreater;
+bool isSmaller;
+
+bool test;
+
+int hp = 100;
+bool isInvincible = true;
+
 int main()
 {
 
-#pragma region 산술연산
-	// 산술 연산자에는
-	// 대입연산
-	// 사칙연산
+#pragma region 비교 연산
 
-	// a에 b를 대입하고 b를 반환하라
-	// -> b라는 바구니 안에 있는 값을, a라는 바구니 안에다 복사한다.
+	// 언제 필요한가?
+	// ex) 체력이 0이 되면 사망
+	// ex) 체력이 30&% 이하면 궁극기 발동 ( 100 * hp / maxHp)
+	// ex) 경험치가 100 이상이면 레벨업
 
-	// b를 반환한다는것은
+	// a == b
+	// 같으면 1, 다르면 0
+	isSame = (a == b);
 
-	a = b = 3;
+	// a != b : a와 b의 값이 다른가?
+	// 다르면 1, 같으면 0
+	isDifferent = (a != b);
 
-	// b에다 3을 대입하고 3을반환 한 후 다시 a에 3을 대입하는것 결국엔 또 3을 반환한다.
+	// a > b : a가 b보다 큰가?
+	// a >= b : a가 b보다 크거나 같은가?
+	// 맞으면 1 아니면 0
+	isGreater = (a > b);
 
-	// 사칙연산
-	
-	a = b + 3; //이런것 + - * / %
-	a = b * 3;
-	a = b / 3;
-	a = b % 3;
+	// a < b : a가 b보다 작은가?
+	// a <= b : a가 b보다 작거나 같은가?
+	// 맞으면 1 아니면 0
+	isSmaller = (a < b);
 
-	// 속도비교
-	a += 3; // a = a + 3;
-	a = a + 3;
 
-	// 증감 연산자
-	a = a + 1; // add eax, 1 -> inc eax
-	a++;
-	++a;
+#pragma endregion
 
-	// 순서차이
-	b = a++; // b = a -> a = a + 1
-	b = ++a; // a = a + 1 - > b = a
+#pragma region 논리연산
+	// 언제 필요한가? 조건에 대한 논리적 사고가 필요할 때
+	// ex) 로그인할 때 아이디도 같고 AND 비밀번호도 같아야 한다.
+	// ex) 길드 마스터이거나 OR 운영자 계쩡이면 길드 해산 가능
+
+	// ! not
+	// 0이면 1, 그 외 0
+	test = !isSame; // 사실상 isDifferent의 의미
+
+	// && and
+	// a && b -> 둘다 1이면 1, 그 외 0
+	test = (hp <= 0 && isInvincible == false); // 죽음
+
+	// || or
+	// a || b -> 둘 중 하나라도 1이면 1 (둘다 0이면 0)
+	test = (hp > 0 || isInvincible == true); // 살았음
+
+
 
 #pragma endregion
 
