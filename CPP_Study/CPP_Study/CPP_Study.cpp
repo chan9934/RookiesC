@@ -2,69 +2,61 @@
 
 using namespace std;
 
-int a = 1;
-int b = 2;
-
-bool isSame;
-bool isDifferent;
-bool isGreater;
-bool isSmaller;
-
-bool test;
-
-int hp = 100;
-bool isInvincible = true;
+unsigned char flag; // 부호를 없애야 >> 를 하더라도 부호비트가 딸려오지 않음
 
 int main()
 {
+#pragma region 비트 연산
 
-#pragma region 비교 연산
+	// 언제 필요한가? (사실 많이는 없음)
+	// 비트 단위의 조작이 필요할 때
+	// - 대표적으로 BitFlag
 
-	// 언제 필요한가?
-	// ex) 체력이 0이 되면 사망
-	// ex) 체력이 30&% 이하면 궁극기 발동 ( 100 * hp / maxHp)
-	// ex) 경험치가 100 이상이면 레벨업
+	// ~ bitwise not
+	// 단일 숫자의 모든 비트를 대상으로, 0은 1, 1은 0으로 뒤바꿈
 
-	// a == b
-	// 같으면 1, 다르면 0
-	isSame = (a == b);
+	// & bitwise and
+	// 두 숫자의 모든 비트 쌍을 대상으로, and를 한다.
 
-	// a != b : a와 b의 값이 다른가?
-	// 다르면 1, 같으면 0
-	isDifferent = (a != b);
+	// | bitwise or
+	// 두 숫자의 모든 비트 쌍을 대상으로, or를 한다.
 
-	// a > b : a가 b보다 큰가?
-	// a >= b : a가 b보다 크거나 같은가?
-	// 맞으면 1 아니면 0
-	isGreater = (a > b);
+	// ^ bitwise xor
+	// 두 숫자의 모든 비트 쌍을 대상으로, xor를 한다.
 
-	// a < b : a가 b보다 작은가?
-	// a <= b : a가 b보다 작거나 같은가?
-	// 맞으면 1 아니면 0
-	isSmaller = (a < b);
+	// << 비트 좌측 이동
+	// 비트열을 N만큰 왼쪽으로 이동
+	// 왼쪽의 넘치는 N개의 비트는 버릶, 새로 생성되는 N개의 비트는 0
+	// *2를 할 때 자주 보이는 패턴
 
+	// >> 비트 우측 이동 좌측보다 더 까다롭다.
+	// 비트열을 N만큼 오른쪽으로 이동
+	// 오른쪽의 넘치는 N개의 비트는 버림
+	// 왼쪽 생성되는 N개의 비트는
+	// - 부호 비트가 존재할 경우 부호 비트를 따라감 (부호있는 정수라면 이 부분을 유의)
+	// - 아니면 0
+	// 따라서 비트단위로 연산을 할때는 unsigned Type으로 하는게 정신건강에 좋다.
 
-#pragma endregion
-
-#pragma region 논리연산
-	// 언제 필요한가? 조건에 대한 논리적 사고가 필요할 때
-	// ex) 로그인할 때 아이디도 같고 AND 비밀번호도 같아야 한다.
-	// ex) 길드 마스터이거나 OR 운영자 계쩡이면 길드 해산 가능
-
-	// ! not
-	// 0이면 1, 그 외 0
-	test = !isSame; // 사실상 isDifferent의 의미
-
-	// && and
-	// a && b -> 둘다 1이면 1, 그 외 0
-	test = (hp <= 0 && isInvincible == false); // 죽음
-
-	// || or
-	// a || b -> 둘 중 하나라도 1이면 1 (둘다 0이면 0)
-	test = (hp > 0 || isInvincible == true); // 살았음
-
-
+	
 
 #pragma endregion
+
+	// 실습
+	// 0b0000 [무적][변이][스턴][공중부양]
+	
+	// 무적 상태로 만든다.
+	flag = (1 << 3); // 숫자가 간단해 8이라는 숫자를 바로 넣을 수도 있지만 커질 수도 있기에 이런식으로 비트 이동을 사용한다. 
+	// 그리고 숫자 넣는것보다 의미가 더 잘 전달된다. 나중에 무적이라는 변수에 3을 지정해 보기 더 직관적으로 만들 수 있다.
+
+	// 변이 상태를 추가한다 (무적 + 변이)
+	flag |= (1 << 2);
+
+	// 무적인지 확인하고 싶다면? (다른 상태는 관심 없음)
+	// bitmask
+	bool invincible = ((flag & (1 << 3)) != 0);
+
+	// 무적이거나 스턴 상태인지 확인하고 싶다면?
+	unsigned char mask = (1 << 3) | (1 << 1);
+	bool stunOrInvincible = ((flag & mask) != 0);
 
 }
