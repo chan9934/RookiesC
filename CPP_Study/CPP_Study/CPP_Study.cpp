@@ -2,41 +2,13 @@
 
 using namespace std;
 
-// 1) 변수의 유효범위
-
-// 전역 변수
-
-// 스택
-// { } 중괄호의 범위가 생존 범위
-// 같은 이름 두번 사용할 때 문제 될 수 있다.
-
-// 2) 연산 우선순위
-
-// 3) 타입 변환
-
-// 4) 사칙 연산 관련
+// 데이터를 메모리에 할당하고 가공하는 방법에 대해 알아봤다.
+// 가공한 데이터를 이용해서 무엇인가를 하고 싶다면?
 
 int main()
 {
-
-	int hp = 20;
-	cout << hp << endl;
-
-	// 바구니 교체
-
-	short hp2 = (short)hp;
-	float hp3 = (float)hp;
-	unsigned int hp4 = (unsigned int)hp;
-
-	// 곱셈
-	// - 오버플로우
-	// 나눗셈
-	// -0 나누기 조심
-	// - 실수 관련
-	int maxhp = 1000;
-	float ratio = hp / maxhp;
-	// hp, maxhp둘다 int형이므로 소수점이 0이 된채로 저장된다.
-	// 이를 고치려면 둘중 하나를 float으로 변경해줘야 한다( 실수가 우선순위가 더 높기 때문에)
-	float ratio = hp / (float)maxhp;
+	// while ~동안에
+	// if ~else 굉장히 유용하다.
+	// 하지만 한 번만 실행하는게 아닌, 특정 조건까지 계속 반복해야 하는 상황
 
 }
