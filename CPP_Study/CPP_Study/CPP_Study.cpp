@@ -2,127 +2,222 @@
 
 using namespace std;
 
-int Input;
-//
-//const int Rock = 1;
-//const int Scissors = 2;
-//const int Paper = 3;
 
-enum ENUM_SRP
+enum PlayerType
 {
-	Rock,
-	Scissors,
-	Paper,
+	PT_Knight = 1,
+	PT_Archer = 2,
+	PT_Mage = 3,
 };
 
-//#이 붙은것 -> 전처리 지시문
-#define DEFINE_SCISSORS cout << "Hello" << endl;
+enum MonsterType
+{
+	MT_Slime = 1,
+	MT_Orc,
+	MT_Skeleton,
+};
 
+int PlayerType;
+int Hp;
+int Attack;
+int Defence;
 
-int Computer;
+int MonsterType;
+int MonsterHp;
+int MonsterAttack;
+int MonsterDefence;
 
-int Win = 0;
-int Lose = 0;
-
+void EnterLobby();
+void SelectPlayer();
+void EnterFiled();
+void CreateRandomMonster();
+void EnterBattle();
 
 int main()
 {
-	DEFINE_SCISSORS
+	// 랜덤 시드 설정
 	srand(time(0));
 
-	int Color = Rock;
+	EnterLobby();
+	return 0;
+}
 
+void EnterLobby()
+{
 
 	while (true)
 	{
-		cout << "바위(1) 가위(2) 보(3) 골라주세요!" << endl;
+		cout << "----------------------------" << endl;
+		cout << "로비에 입장했습니다!" << endl;
+		cout << "---------------------------" << endl;
 
-		cout << "현재 승률 : ";
+		//플레이어 직업 선택
+		SelectPlayer();
 
-		if ((Win + Lose) == 0)
+		cout << "----------------------------" << endl;
+		cout << "(1) 필드 입장 (2) 게임 종료" << endl;
+		cout << "----------------------------" << endl;
+
+		int input;
+		cin >> input;
+
+		if (input == 1)
 		{
-			cout << "없음" << endl;
+			EnterFiled();
 		}
 		else
 		{
-
-			cout << (int)(((float)Win / (Win + Lose)) * 100) << endl;
+			return;
 		}
 
+		
+	}
+}
+
+void SelectPlayer()
+{
+	while (true)
+	{
+		cout << "----------------------------" << endl;
+		cout << "직업을 골라주세요!" << endl;
+		cout << "(1) 기사 (2) 궁수 (3) 법사" << endl;
 		cout << "> ";
 
-		cin >> Input;
+		cin >> PlayerType;
 
-
-		Computer = 1 + (rand() % 3);
-
-		switch (Input)
+		switch (PlayerType)
 		{
-		case Rock:
-			cout << "바위(님) vs ";
-			switch (Computer)
-			{
-			case Rock:
-				cout << "바위(컴퓨터) 비겼습니다." << endl;
-				break;
-			case Scissors:
-				cout << "가위(컴퓨터) 이겼습니다." << endl;
-				++Win;
-				break;
-			case Paper:
-				cout << "보(컴퓨터) 졌습니다." << endl;
-				++Lose;
-				break;
-			default:
-				break;
-			}
-			break;
-		case Scissors:
-			cout << "가위(님) vs ";
-			switch (Computer)
-			{
-			case Rock:
-				cout << "바위(컴퓨터) 졌습니다." << endl;
-				++Lose;
-				break;
-			case Scissors:
-				cout << "가위(컴퓨터) 비겼습니다." << endl;
-				break;
-			case Paper:
-				cout << "보(컴퓨터) 이겼습니다." << endl;
-				++Win;
-				break;
-			default:
-				break;
-			}
-			break;
-		case Paper:
-			cout << "보(님) vs ";
-			switch (Computer)
-			{
-			case Rock:
-				cout << "바위(컴퓨터) 이겼습니다." << endl;
-				++Win;
-				break;
-			case Scissors:
-				cout << "가위(컴퓨터) 졌습니다." << endl;
-				++Lose;
-				break;
-			case Paper:
-				cout << "보(컴퓨터) 비겼습니다." << endl;
-				break;
-			default:
-				break;
-			}
-			break;
+		case PlayerType::PT_Knight:
+			cout << "기사 생성중...!" << endl;
+			Hp = 150;
+			Attack = 10;
+			Defence = 5;
+			return;
+
+		case PlayerType::PT_Archer:
+			cout << "궁수 생성중...!" << endl;
+			Hp = 100;
+			Attack = 15;
+			Defence = 3;
+			return;
+
+		case PlayerType::PT_Mage:
+			cout << "마법사 생성중...!" << endl;
+			Hp = 80;
+			Attack = 25;
+			Defence = 0;
+			return;
+
 		default:
-			return 0;
 			break;
 
 		}
-
-
 	}
 
+}
 
+void EnterFiled()
+{
+	while (true)
+	{
+		cout << "----------------------------" << endl;
+		cout << "필드에 입장했습니다!" << endl;
+		cout << "----------------------------" << endl;
+
+		cout << "[PLAYER] HP : " << Hp << " / ATT : " << Attack << " / DEF : " << Defence << endl;
+
+		CreateRandomMonster();
+
+		cout << "----------------------------" << endl;
+		cout << "(1) 전투 (2) 도주" << endl;
+		cout << "> ";
+
+		int input;
+		cin >> input;
+
+		if (input == 1)
+		{
+			EnterBattle();
+			if (Hp == 0)
+			{
+				return;
+			}
+		}
+		else
+		{
+			return;
+		}
+
+	}
+	
+}
+
+void CreateRandomMonster()
+{
+	// 1-3
+	MonsterType = 1 + rand() % 3;
+
+	if (MonsterType == MT_Slime)
+	{
+		cout << "슬라임 생성중...! (HP:15 / ATT:5 / DEF:0)" << endl;
+		MonsterHp = 15;
+		MonsterAttack = 5;
+		MonsterDefence = 0;
+	}
+	else if (MonsterType == MT_Orc)
+	{
+
+		cout << "오크 생성중...! (HP:40 / ATT:10 / DEF:3)" << endl;
+		MonsterHp = 40;
+		MonsterAttack = 10;
+		MonsterDefence = 3;
+	}
+	else
+	{
+
+		cout << "해골 생성중...! (HP:80 / ATT:15 / DEF:5)" << endl;
+		MonsterHp = 80;
+		MonsterAttack = 15;
+		MonsterDefence = 5;
+	}
+}
+
+void EnterBattle()
+{
+	while (true)
+	{
+		int Damage = Attack - MonsterDefence;
+		if (Damage < 0)
+			Damage = 0;
+
+		// 선빵
+		MonsterHp -= Damage;
+		if (MonsterHp < 0)
+			MonsterHp = 0;
+
+		cout << "몬스터 남은 체력 : " << MonsterHp << endl;
+
+		if (MonsterHp == 0)
+		{
+			cout << "몬스터를 처치했습니다!" << endl;
+			return;
+		}
+
+		Damage = MonsterAttack - Defence;
+		if (Damage < 0)
+			Damage = 0;
+
+		// 반격
+		Hp -= Damage;
+		if (Hp < 0)
+			Hp = 0;
+
+		cout << "플레이어 남은 체력 : " << Hp << endl;
+
+		if (Hp == 0)
+		{
+			cout << "당신은 사망했습니다..." << endl;
+			return;
+		}
+	}
 }
