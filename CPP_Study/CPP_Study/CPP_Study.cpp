@@ -4,113 +4,47 @@ using namespace std;
 
 struct StatInfo
 {
-	int hp; // +0
-	int attack; // +4
-	int defence; // +8
+	int Hp = 0xAAAAAAAA;
+	int Attack = 0xBBBBBBBB;
+	int Deffence = 0xCCCCCCCC;
+
 };
-
-void EnterLobby();
-StatInfo CreatePlayer();
-
-void CreateMonster(StatInfo* info);
-bool StartBattle(StatInfo*, StatInfo*);
 
 int main()
 {
+	StatInfo Monster[10];
 
-	EnterLobby();
-	return 0;
-}
-void EnterLobby()
-{
-	cout << "로비에 입장했습니다" << endl;
+	StatInfo* Monster_0 = Monster;
+	Monster_0->Hp = 100;
+	Monster_0->Attack = 10;
+	Monster_0->Deffence = 1;
 	
-	StatInfo Player;
+	StatInfo* Monster_1 = Monster + 1;
+	Monster_0->Hp = 200;
+	Monster_0->Attack = 20;
+	Monster_0->Deffence = 2;
 
-	Player.attack = 0xbbbbbbbb;
-	Player.hp = 0xbbbbbbbb;
-	Player.defence = 0xbbbbbbbb;
+	StatInfo& Monster_2 = *(Monster + 2);
+	Monster_2.Hp = 300;
+	Monster_2.Attack = 30;
+	Monster_2.Deffence = 3;
 
-	Player = CreatePlayer();
+	StatInfo Temp = *(Monster + 3);
 
-	StatInfo Monster;
+	const char *B = "Hello World";
 
-	Monster.attack = 0xbbbbbbbb;
-	Monster.hp = 0xbbbbbbbb;
-	Monster.defence = 0xbbbbbbbb;
+	cout << B << endl; // Hello World"
+	cout << *B << endl; // H
 
-	CreateMonster(&Monster);
 
-	bool Victory = StartBattle(&Player, &Monster);
+	char A[] = "Hello World";
 
-	if (Victory == true)
-	{
-		cout << "승리!" << endl;
-	}
-	else
-		cout << "패배!" << endl;
+	cout << A << endl; // Hello World"
+	cout << *A << endl; // H
+
 }
 
-StatInfo CreatePlayer()
+void Test(char B[])
 {
-	StatInfo Ret;
-
-	cout << "플레이어 생성" << endl;
-	
-
-	Ret.hp = 100;
-	Ret.attack = 10;
-	Ret.defence = 2;
-
-	return Ret;
+	B[0] = 'X';
 }
-
-void CreateMonster(StatInfo* Info)
-{
-	cout << "몬스터 생성" << endl;
-
-	Info->hp = 40;
-	Info->defence = 8;
-	Info->attack = 1;
-}
-
-bool StartBattle(StatInfo* Player, StatInfo* Monster)
-{
-	while (true)
-	{
-		int Damage = Player->attack - Monster->defence;
-			if (Damage < 0)
-				Damage = 0;
-
-			Monster->hp -= Damage;
-			if (Monster->hp < 0)
-			{
-				Monster->hp = 0;
-			}
-
-			cout << "몬스터 HP : " << Monster->hp << endl;
-
-			if (Monster->hp == 0)
-			{
-				return true;
-			}
-
-			int damage = Monster->attack - Player->defence;
-			if (Damage < 0)
-			{
-				Damage = 0;
-			}
-
-			cout << "플레이어 HP : " << Player->hp << endl;
-
-			Player->hp -= damage;
-
-			if (Player->hp < 0)
-				Player->hp = 0;
-
-			if (Player->hp == 0)
-				return false;
-	}
-
-}
-
