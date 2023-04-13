@@ -2,49 +2,97 @@
 
 using namespace std;
 
-struct StatInfo
+void Swap(int& A, int& B)
 {
-	int Hp = 0xAAAAAAAA;
-	int Attack = 0xBBBBBBBB;
-	int Deffence = 0xCCCCCCCC;
+	int Temp = A;
+	A = B;
+	B = Temp;
+}
 
-};
-
-int main()
+void Sort(int Number[], int Count)
 {
-	StatInfo Monster[10];
+	for (int i = 0; i < Count; ++i)
+	{
+		for (int j = i + 1; j < Count; ++j)
+		{
+			if (Number[i] > Number[j])
+			{
+				Swap(Number[i], Number[j]);
+			}
 
-	StatInfo* Monster_0 = Monster;
-	Monster_0->Hp = 100;
-	Monster_0->Attack = 10;
-	Monster_0->Deffence = 1;
-	
-	StatInfo* Monster_1 = Monster + 1;
-	Monster_0->Hp = 200;
-	Monster_0->Attack = 20;
-	Monster_0->Deffence = 2;
-
-	StatInfo& Monster_2 = *(Monster + 2);
-	Monster_2.Hp = 300;
-	Monster_2.Attack = 30;
-	Monster_2.Deffence = 3;
-
-	StatInfo Temp = *(Monster + 3);
-
-	const char *B = "Hello World";
-
-	cout << B << endl; // Hello World"
-	cout << *B << endl; // H
-
-
-	char A[] = "Hello World";
-
-	cout << A << endl; // Hello World"
-	cout << *A << endl; // H
+		}
+	}
 
 }
 
-void Test(char B[])
+void ChooseLotto(int Number[])
 {
-	B[0] = 'X';
+	srand((unsigned)(time(0)));
+	
+	for (int i = 0; i < 6; )
+	{
+		int Temp = rand() % 45 + 1;
+
+		if (i >= 1)
+		{
+			for (int j = 0; j < i; ++j)
+			{
+				if (Number[j] == Temp)
+				{
+					break;
+				}
+				
+				if(i - 1 == j)
+				{
+					Number[i] = Temp;
+					++i;
+					break;
+				}
+			}
+		}
+		else
+		{
+			Number[i] = Temp;
+			++i;
+		}
+	}
+	Sort(Number, 6);
+}
+
+int main()
+{
+	int a = 1;
+	int b = 2;
+	cout << a << b << endl;
+
+	Swap(a, b);
+	cout << a << b << endl;
+
+	int Number[6] = { 1, 42, 3, 15, 5, 6 };
+
+	for (int i = 0; i < sizeof(Number) / sizeof(int); ++i)
+	{
+		cout << Number[i] << " ";
+	}
+	cout << endl;
+
+	Sort(Number, sizeof(Number) / sizeof(int));
+	for (int i = 0; i < sizeof(Number) / sizeof(int); ++i)
+	{
+		cout << Number[i] << " ";
+	}
+	cout << endl;
+	int Number2[6] = {};
+	for (int i = 0; i < sizeof(Number) / sizeof(int); ++i)
+	{
+		cout << Number2[i] << " ";
+	}
+	cout << endl;
+	ChooseLotto(Number2);
+	for (int i = 0; i < sizeof(Number) / sizeof(int); ++i)
+	{
+		cout << Number2[i] << " ";
+	}
+
+
 }
