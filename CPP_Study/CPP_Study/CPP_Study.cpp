@@ -2,97 +2,61 @@
 
 using namespace std;
 
-void Swap(int& A, int& B)
+int* Test()
 {
-	int Temp = A;
-	A = B;
-	B = Temp;
+	int a = 3;
+	return &a;
 }
 
-void Sort(int Number[], int Count)
+void TestPointer(int* Pointer)
 {
-	for (int i = 0; i < Count; ++i)
-	{
-		for (int j = i + 1; j < Count; ++j)
-		{
-			if (Number[i] > Number[j])
-			{
-				Swap(Number[i], Number[j]);
-			}
-
-		}
-	}
-
+	int a[100] = {};
+	a[99] = 0xAAAAAAAA;
+	*Pointer = 3;
 }
-
-void ChooseLotto(int Number[])
-{
-	srand((unsigned)(time(0)));
-	
-	for (int i = 0; i < 6; )
-	{
-		int Temp = rand() % 45 + 1;
-
-		if (i >= 1)
-		{
-			for (int j = 0; j < i; ++j)
-			{
-				if (Number[j] == Temp)
-				{
-					break;
-				}
-				
-				if(i - 1 == j)
-				{
-					Number[i] = Temp;
-					++i;
-					break;
-				}
-			}
-		}
-		else
-		{
-			Number[i] = Temp;
-			++i;
-		}
-	}
-	Sort(Number, 6);
-}
-
 int main()
 {
-	int a = 1;
-	int b = 2;
-	cout << a << b << endl;
 
-	Swap(a, b);
-	cout << a << b << endl;
+	//int First[5] = { 4, 2, 3, 1, 4 };
+	//int Secnd[5] = { 2, 5, 1, 2, 4 };
 
-	int Number[6] = { 1, 42, 3, 15, 5, 6 };
+	//int Apartment[2][5] = { { 4, 2, 3, 1, 4 }, { 2, 5, 1, 2, 4 } };
 
-	for (int i = 0; i < sizeof(Number) / sizeof(int); ++i)
-	{
-		cout << Number[i] << " ";
-	}
-	cout << endl;
+	//for (int Floor = 0; Floor < 2; ++Floor)
+	//{
+	//	for (int Room = 0; Room < 5; ++Room)
+	//	{
+	//		int Num = Apartment[Floor][Room];
 
-	Sort(Number, sizeof(Number) / sizeof(int));
-	for (int i = 0; i < sizeof(Number) / sizeof(int); ++i)
-	{
-		cout << Number[i] << " ";
-	}
-	cout << endl;
-	int Number2[6] = {};
-	for (int i = 0; i < sizeof(Number) / sizeof(int); ++i)
-	{
-		cout << Number2[i] << " ";
-	}
-	cout << endl;
-	ChooseLotto(Number2);
-	for (int i = 0; i < sizeof(Number) / sizeof(int); ++i)
-	{
-		cout << Number2[i] << " ";
-	}
+	//		cout << Num << " ";
+	//	}
+	//	cout << endl;
+	//}
 
+	//int Appartment1D[10] = { 4, 2, 3, 1, 4, 2, 5, 1, 2, 4 };
+
+	//for (int Floor = 0; Floor < 2; ++Floor)
+	//{
+	//	for (int Room = 0; Room < 5; ++Room)
+	//	{
+	//		int Num = Appartment1D[(Floor * 5) + Room];
+
+	//		cout << Num << " ";
+	//	}
+	//	cout << endl;
+	//}
+
+	int Appartment2D[2][2] = { { 1, 2 }, { 3, 4 } };
+	int(*P2)[2] = Appartment2D;
+	cout << (*P2)[0] << endl;
+	cout << (*P2)[1] << endl;
+	cout << (*P2 + 1)[1] << endl;
+	cout << (*P2 + 2)[1] << endl;
+
+	int* Pointer = Test();
+	TestPointer(Pointer);
+
+
+	
 
 }
