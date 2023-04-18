@@ -2,61 +2,102 @@
 
 using namespace std;
 
-int* Test()
+enum PlayerType
 {
-	int a = 3;
-	return &a;
-}
+	PT_Knite = 1,
+	PT_Archer = 2,
+	PT_Mage = 3
+};
 
-void TestPointer(int* Pointer)
+enum MonsterType
 {
-	int a[100] = {};
-	a[99] = 0xAAAAAAAA;
-	*Pointer = 3;
-}
+	MT_Slime = 1,
+	MT_Orc = 2,
+	MT_Skeleton = 3
+};
+
+struct StatInfo
+{
+	int Hp = 0;
+	int Deffence = 0;
+	int Attack = 0;
+};
+
+void EnterLobby();
+void PrintMessage(const char* msg);
+void CreatePlayer(StatInfo* PlayerInfo);
+void PrintStatInfo(const char* name, const StatInfo& Info);
+void EnterGame(StatInfo* PlayerInfo);
+void CreateMonsters(StatInfo MonsterInfo[], int Count);
+bool EnterBattle(StatInfo* PlayerInfo, StatInfo* MonsterInfo);
+
+
 int main()
 {
+	EnterLobby();
+}
 
-	//int First[5] = { 4, 2, 3, 1, 4 };
-	//int Secnd[5] = { 2, 5, 1, 2, 4 };
+void EnterLobby()
+{
+	while (true)
+	{
+		PrintMessage("로비에 입장했습니다");
+		StatInfo Player;
+		
+		CreatePlayer(&Player);
+		PrintStatInfo("Player", Player);
+	}
+}
 
-	//int Apartment[2][5] = { { 4, 2, 3, 1, 4 }, { 2, 5, 1, 2, 4 } };
+void PrintMessage(const char* msg)
+{
+	cout << "******************************" << endl;
+	cout << msg << endl;
+	cout << "******************************" << endl;
+}
 
-	//for (int Floor = 0; Floor < 2; ++Floor)
-	//{
-	//	for (int Room = 0; Room < 5; ++Room)
-	//	{
-	//		int Num = Apartment[Floor][Room];
+void CreatePlayer(StatInfo* PlayerInfo)
+{
+	PrintMessage("캐릭터 생성창");
+	PrintMessage("[1] 기사 [2] 궁수 [3] 법사");
+	int Input;
+	cin >> Input;
+	switch (Input)
+	{
+	case PT_Knite:
+		(*PlayerInfo).Hp = 100;
+		(*PlayerInfo).Attack = 10;
+		(*PlayerInfo).Deffence = 5;
+		break;
+	case PT_Archer:
+		(*PlayerInfo).Hp = 80;
+		(*PlayerInfo).Attack = 15;
+		(*PlayerInfo).Deffence = 3;
+		break;
+	case PT_Mage:
+		(*PlayerInfo).Hp = 50;
+		(*PlayerInfo).Attack = 25;
+		(*PlayerInfo).Deffence = 1;
+		break;
+	}
+}
 
-	//		cout << Num << " ";
-	//	}
-	//	cout << endl;
-	//}
+void PrintStatInfo(const char* name, const StatInfo& Info)
+{
+	cout << "******************************" << endl;
+	cout << name << " : " << "HP= " << Info.Hp << "ATT= " << Info.Attack << "DEF= " << Info.Deffence << endl;
+	cout << "******************************" << endl;
+}
 
-	//int Appartment1D[10] = { 4, 2, 3, 1, 4, 2, 5, 1, 2, 4 };
+void EnterGame(StatInfo* PlayerInfo)
+{
+}
 
-	//for (int Floor = 0; Floor < 2; ++Floor)
-	//{
-	//	for (int Room = 0; Room < 5; ++Room)
-	//	{
-	//		int Num = Appartment1D[(Floor * 5) + Room];
+void CreateMonsters(StatInfo MonsterInfo[], int Count)
+{
+}
 
-	//		cout << Num << " ";
-	//	}
-	//	cout << endl;
-	//}
-
-	int Appartment2D[2][2] = { { 1, 2 }, { 3, 4 } };
-	int(*P2)[2] = Appartment2D;
-	cout << (*P2)[0] << endl;
-	cout << (*P2)[1] << endl;
-	cout << (*P2 + 1)[1] << endl;
-	cout << (*P2 + 2)[1] << endl;
-
-	int* Pointer = Test();
-	TestPointer(Pointer);
-
-
-	
-
+bool EnterBattle(StatInfo* PlayerInfo, StatInfo* MonsterInfo)
+{
+	return false;
 }
