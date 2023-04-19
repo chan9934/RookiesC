@@ -2,35 +2,34 @@
 
 using namespace std;
 
-enum PlayerType
+enum
 {
 	PT_Knite = 1,
 	PT_Archer = 2,
 	PT_Mage = 3
 };
 
-enum MonsterType
+enum
 {
 	MT_Slime = 1,
-	MT_Orc = 2,
+	MT_Ork = 2,
 	MT_Skeleton = 3
 };
 
 struct StatInfo
 {
-	int Hp = 0;
-	int Deffence = 0;
-	int Attack = 0;
+	int Hp;
+	int Attack;
+	int Deffence;
 };
 
 void EnterLobby();
 void PrintMessage(const char* msg);
-void CreatePlayer(StatInfo* PlayerInfo);
-void PrintStatInfo(const char* name, const StatInfo& Info);
-void EnterGame(StatInfo* PlayerInfo);
-void CreateMonsters(StatInfo MonsterInfo[], int Count);
-bool EnterBattle(StatInfo* PlayerInfo, StatInfo* MonsterInfo);
-
+void CreatePlayer(StatInfo* playerinfo);
+void PrintStatInfo(const char* Name, const StatInfo& info);
+void EnterGame(StatInfo* playerInfo);
+void CreateMonsters(StatInfo monsterInfo[], int count);
+bool EnterBattle(StatInfo* playerinfo, StatInfo* monsterinfo);
 
 int main()
 {
@@ -41,63 +40,113 @@ void EnterLobby()
 {
 	while (true)
 	{
-		PrintMessage("로비에 입장했습니다");
-		StatInfo Player;
-		
-		CreatePlayer(&Player);
-		PrintStatInfo("Player", Player);
+		PrintMessage("캐릭터 생성창");
+		PrintMessage("[1] 기사 [2] 궁수 [3] 마법사");
+		StatInfo playerinfo;
+		CreatePlayer(&playerinfo);
+		PrintStatInfo("Player", playerinfo);
+		EnterGame(&playerinfo);
+
+
 	}
 }
 
 void PrintMessage(const char* msg)
 {
-	cout << "******************************" << endl;
+	cout << "*************************" << endl;
 	cout << msg << endl;
-	cout << "******************************" << endl;
+	cout << "*************************" << endl;
 }
 
-void CreatePlayer(StatInfo* PlayerInfo)
+void CreatePlayer(StatInfo* playerinfo)
 {
-	PrintMessage("캐릭터 생성창");
-	PrintMessage("[1] 기사 [2] 궁수 [3] 법사");
-	int Input;
-	cin >> Input;
-	switch (Input)
+	int input;
+	cin >> input;
+
+	bool unselect = true;
+	while(unselect)
 	{
-	case PT_Knite:
-		(*PlayerInfo).Hp = 100;
-		(*PlayerInfo).Attack = 10;
-		(*PlayerInfo).Deffence = 5;
-		break;
-	case PT_Archer:
-		(*PlayerInfo).Hp = 80;
-		(*PlayerInfo).Attack = 15;
-		(*PlayerInfo).Deffence = 3;
-		break;
-	case PT_Mage:
-		(*PlayerInfo).Hp = 50;
-		(*PlayerInfo).Attack = 25;
-		(*PlayerInfo).Deffence = 1;
-		break;
+		switch (input)
+		{
+		case PT_Knite:
+			playerinfo->Hp = 100;
+			playerinfo->Attack = 10;
+			playerinfo->Deffence = 5;
+			unselect = false;
+			break;
+		case PT_Archer:
+			playerinfo->Hp = 80;
+			playerinfo->Attack = 15;
+			playerinfo->Deffence = 3;
+			unselect = false;
+			break;
+		case PT_Mage:
+			playerinfo->Hp = 50;
+			playerinfo->Attack = 25;
+			playerinfo->Deffence = 1;
+			unselect = false;
+			break;
+		default:
+			break;
+		}
 	}
 }
 
-void PrintStatInfo(const char* name, const StatInfo& Info)
+void PrintStatInfo(const char* Name, const StatInfo& info)
 {
-	cout << "******************************" << endl;
-	cout << name << " : " << "HP= " << Info.Hp << "ATT= " << Info.Attack << "DEF= " << Info.Deffence << endl;
-	cout << "******************************" << endl;
+	cout << "*************************" << endl;
+	cout << Name << " : " << "Hp="<<info.Hp <<" ATT=" << info.Attack << " DEF=" << info.Deffence << endl;
+	cout << "*************************" << endl;
+
 }
 
-void EnterGame(StatInfo* PlayerInfo)
+void EnterGame(StatInfo* playerInfo)
 {
+	PrintMessage("게임에 입장했습니다");
+	StatInfo monsterinfo;
+	CreateMonsters(&monsterinfo, 2);
+	if (EnterBattle(playerInfo, &monsterinfo))
+	{
+		PrintMessage("Game Over");
+	}
 }
 
-void CreateMonsters(StatInfo MonsterInfo[], int Count)
+void CreateMonsters(StatInfo monsterInfo[], int count)
 {
+	srand(time(0));
+	
+
+	for (int i = 0; i < count; ++i)
+	{
+		int Temp = rand() % 3;
+		switch (Temp)
+		{
+		case MT_Slime:
+			monsterInfo[i].Hp = 30;
+			monsterInfo[i].Attack = 5;
+			monsterInfo[i].Deffence = 1;
+			break;
+		case MT_Ork:
+			monsterInfo[i].Hp = 40;
+			monsterInfo[i].Attack = 8;
+			monsterInfo[i].Deffence = 2;
+			break;
+		case MT_Skeleton:
+			monsterInfo[i].Hp = 50;
+			monsterInfo[i].Attack = 15;
+			monsterInfo[i].Deffence = 3;
+			break;
+		}
+		
+		PrintStatInfo("Monster", monsterInfo[i]);
+	}
 }
 
-bool EnterBattle(StatInfo* PlayerInfo, StatInfo* MonsterInfo)
+bool EnterBattle(StatInfo* playerinfo, StatInfo* monsterinfo)
 {
-	return false;
+	while (true)
+	{
+
+	}
+	return true;
 }
