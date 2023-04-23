@@ -1,115 +1,95 @@
-﻿#include<iostream>
+﻿#include <iostream>
+#include<iomanip>
 
 using namespace std;
 
-#define BUF_SIZE 100
+#define MAX 100
 
-int StrLen(char msg[])
+int board[MAX][MAX];
+int n;
+
+void PrintBoard()
 {
-	int Count = 0;
-	while(true)
+	for (int y = 0; y < n; ++y)
 	{
-		if (msg[Count] == '\0')
+		for (int x = 0; x < n; ++x)
 		{
-			break;
+			cout << setfill('0') << setw(2) << board[y][x] << " ";
 		}
-		++Count;
+		cout << endl;
 	}
-
-	return Count;
-
 }
 
-char* StrCpy(char* des, char* src)
+bool CanGo(int y, int x)
 {
-	int count = 0;
-	while (src[count] != '\0')
+	if (x < 0 || x >= n || y < 0 || y >= n)
 	{
-		des[count] = src[count];
-		++count;
+		return false;
 	}
-	des[count] = src[count];
 
-	return des;
-
-}
-
-char* Cpy(char* des, char* src)
-{
-	
-
-	StrCpy(des + StrLen(des), src);
-
-	return des;
-	
-}
-
-int StrCmp(char* a, char* b)
-{
-	char* first = nullptr;
-	char* second = nullptr;
-	if (StrLen(a) > StrLen(b))
+	else if (board[y][x] != 0)
 	{
-		first = a;
-		second = b;
+		return false;
 	}
-
 	else
 	{
-		first = b;
-		second = a;
+		return true;
 	}
-	
-	for (int i = 0; i < StrLen(first); ++i)
+}
+
+void SetBoard()
+{
+
+	cin >> n;
+
+
+	enum DIR
 	{
-		bool Last = false;
-		if ((i + 1) == StrLen(first))
+		Right,
+		Down,
+		Left,
+		Up
+	};
+
+	int y = 0;
+	int x = 0;
+
+	int num = 1;
+
+	int dy[4] = { 0, 1, 0, -1 };
+	int dx[4] = { 1, 0, -1, 0 };
+
+	int Dir = Right;
+
+	while (true)
+	{
+		if (CanGo(y, x))
 		{
-			Last = true;
-		}
-		if (a[i] > b[i])
-		{
-			return 1;
-		}
-		else if (a[i] == b[i])
-		{
-			if (Last)
+			board[y][x] = num;
+			if (num == n * n)
 			{
-				return 0;
+				return;
 			}
-			continue;
+			++num;
 		}
 		else
 		{
-			return -1;
+			y = y - dy[Dir];
+			x = x - dx[Dir];
+			Dir = (Dir + 1) % 4;
 		}
+
+		y = y + dy[Dir];
+		x = x + dx[Dir];
 	}
+
+
 
 }
 
-char* ReverseString(char* a)
-{
-	char Temp[BUF_SIZE];
-
-	StrCpy(Temp, a);
-	int Count = StrLen(a);
-	for (int i = 0; i < Count; ++i)
-	{
-		a[i] = Temp[Count - 1 - i];
-	}
-	a[Count] = '\0';
-
-	
-	return a;
-}
 
 int main()
 {
-	
-	char a[BUF_SIZE] = "aa";
-
-	char b[BUF_SIZE] = "a";
-
-	char c[BUF_SIZE] = "HelloWorld";
-	cout << ReverseString(c);
+	SetBoard();
+	PrintBoard();
 }
