@@ -10,6 +10,8 @@ public:
 	virtual void vAttack() = 0;
 };
 
+
+
 class Knight : public Player
 {
 public:
