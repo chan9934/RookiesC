@@ -2,83 +2,19 @@
 
 using namespace std;
 
-class Position
+class Player
 {
-public:
-	int x = 3;
-
-public:
-	Position operator+(int a)
-	{
-		Position Temp;
-		Temp.x = x + a;
-		return Temp;
-	}
-
-	Position operator*(const Position& a)
-	{
-		Position Temp;
-		Temp.x = x + a.x;
-		return Temp;
-	}
-
-	bool operator==(const Position& a)
-	{
-		return x == a.x;
-	}
-
-	Position& operator=(int a)
-	{
-		x = a;
-
-		return *this;
-	}
-
-	Position& operator=(const Position& a)
-	{
-		x = a.x;
-		return *this;
-	}
-
-	position& operator++()
-	{
-		++x;
-		++y;
-
-		return *this;
-	}
-
-	position operator++(int)
-	{
-		position temp = *this;
-		++x;
-		++y;
-		return temp;
-	}
-
+public :
+	int id;
 };
 
-Position operator+(int a, const Position& b)
+int id()
 {
-	Position Temp;
-	Temp.x = b.x + a;
-	return Temp;
+	static int s_id = 1;
+	return s_id++;
 }
 
 int main()
 {
-	Position A;
-	cout << (A + 1).x << endl;
-	cout << (1 + A).x << endl;
-	Position B;
-	B.x = 3;
-
-	cout << (A == B) << endl;
-	A = 1;
-	cout << A.x << endl;
-	
-	A = 3;
-	cout << A.x << endl;
-
 
 }
