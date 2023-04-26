@@ -40,6 +40,22 @@ public:
 		return *this;
 	}
 
+	position& operator++()
+	{
+		++x;
+		++y;
+
+		return *this;
+	}
+
+	position operator++(int)
+	{
+		position temp = *this;
+		++x;
+		++y;
+		return temp;
+	}
+
 };
 
 Position operator+(int a, const Position& b)
