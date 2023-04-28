@@ -8,6 +8,7 @@ public :
 	int id;
 };
 
+
 int id()
 {
 	static int s_id = 1;
