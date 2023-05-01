@@ -2,79 +2,47 @@
 
 using namespace std;
 
-class Pet
-{
-public:
-	Pet()
-	{
-	}
-	Pet(const Pet& _pet)
-	{
-
-	}
-};
-
 class Player
 {
 public:
-	Player()
-	{
-	}
-	Player(const Player& _player)
-	{
-		Level = _player.Level;
-	}
-	~Player()
-	{
-	}
-
-	int Level = 0;
+	virtual ~Player() {}
 };
-class Knight : public Player
+
+class Knight :public Player
 {
 public:
-	Knight()
-	{
-		m_Pet = new Pet;
-		cout << "생성자" << endl;
-	}
-
-	Knight(const Knight& _knight) : Player(_knight), m_Pet(_knight.m_Pet)
-	{
-		m_Hp = _knight.m_Hp;
-		m_Pet = new Pet(*(_knight.m_Pet));
-		cout << "복사 생성자" << endl;
-	}
-
-	Knight& operator = (const Knight& _knight)
-	{
-		Player::operator=(_knight);
-		m_Hp = _knight.m_Hp;
-		m_Pet = new Pet(*(_knight.m_Pet));
-		cout << "복사 대입 연산자" << endl;
-		return *this;
-	}
-	~Knight()
-	{
-		delete m_Pet;
-	}
-
-	int m_Hp = 100;
-	Pet* m_Pet;
 };
+
+class Archer : public Player
+{
+public:
+};
+
+class Dog
+{
+public:
+};
+void PrintName(char* str)
+{
+	cout << str << endl;
+}
+
 
 int main()
 {
-	Pet* pet = new Pet;
-	Knight knight1;
-	knight1.m_Hp = 200;
-	knight1.m_Pet = pet;
-	knight1.Level = 200;
+	int Hp = 100;
+	int MaxHp = 200;
+	float Ratio = static_cast<float>(Hp) / MaxHp;
 
+	Player* p1 = new Archer();
+	Knight* k1 = static_cast<Knight*>(p1);
 
-	Knight knight2 = knight1;
+	Knight* k2 = dynamic_cast<Knight*>(p1);
 
-	Knight knight3;
-	knight3 = knight1;
+	PrintName(const_cast<char*>("Rookiess"));
+
+	__int64 Test = reinterpret_cast<__int64>(k1);
+
+	Dog* d1 = reinterpret_cast<Dog*>(k1);
 
 }
