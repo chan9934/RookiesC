@@ -140,7 +140,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CPP_Study.cpp" />
-    <ClCompile Include="Test.cpp" />
+    <ClCompile Include="Creature.cpp" />
+    <ClCompile Include="Filed.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="Player.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Creature.h" />
+    <ClInclude Include="Filed.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Monster.h" />
+    <ClInclude Include="Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
