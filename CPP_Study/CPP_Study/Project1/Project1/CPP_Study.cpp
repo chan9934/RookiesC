@@ -2,138 +2,79 @@
 
 using namespace std;
 
-class Item
+class Pet
 {
 public:
-	Item()
+	Pet()
 	{
-		cout << "Item()" << endl;
 	}
-	Item(int IT) : ItemType(IT)
+	Pet(const Pet& _pet)
 	{
 
 	}
-
-	Item(const Item& Item)
-	{
-		cout << "Item(const Item& Item" << endl;
-	}
-
-	virtual ~Item()
-	{
-		cout << "~Item()" << endl;
-	}
-
-	int ItemType = 0;
-	int ItemObid = 0;
-	char Dummy[4096] = {};
-
 };
 
-enum ItemType
-{
-	IT_Weapon = 1,
-	IT_Armor = 2
-};
-
-class Weapon : public Item
+class Player
 {
 public:
-	Weapon() : Item(IT_Weapon)
+	Player()
 	{
-		cout << "Weapon()" << endl;
-		damage = rand() % 100;
 	}
-	virtual ~Weapon()
+	Player(const Player& _player)
 	{
-		cout << "~Weapon()" << endl;
+		Level = _player.Level;
+	}
+	~Player()
+	{
 	}
 
-	int damage = 0;
+	int Level = 0;
 };
-class Armor : public Item
+class Knight : public Player
 {
 public:
-	Armor() : Item(IT_Armor)
+	Knight()
 	{
-		cout << "Armor()" << endl;
+		m_Pet = new Pet;
+		cout << "생성자" << endl;
 	}
-	virtual 	~Armor()
+
+	Knight(const Knight& _knight) : Player(_knight), m_Pet(_knight.m_Pet)
 	{
-		cout << "~Armor()" << endl;
+		m_Hp = _knight.m_Hp;
+		m_Pet = new Pet(*(_knight.m_Pet));
+		cout << "복사 생성자" << endl;
 	}
+
+	Knight& operator = (const Knight& _knight)
+	{
+		Player::operator=(_knight);
+		m_Hp = _knight.m_Hp;
+		m_Pet = new Pet(*(_knight.m_Pet));
+		cout << "복사 대입 연산자" << endl;
+		return *this;
+	}
+	~Knight()
+	{
+		delete m_Pet;
+	}
+
+	int m_Hp = 100;
+	Pet* m_Pet;
 };
-
-void Function(Item m_Item)
-{
-
-}
-
-void FunctionPtr(Item* Ptr_Item)
-{
-
-}
-
 
 int main()
 {
-	//{
-	//	Item I1[100];
-	//	cout << "------------------------------" << endl;
-
-	//	Item* I2[100];
-	//	for (int i = 0; i < 100; ++i)
-	//	{
-	//		I2[i] = new Item();
-	//	}
-	//	for (int i = 0; i < 100; ++i)
-	//	{
-	//		delete I2[i];
-	//	}
-	//	
-	//	
-	//}
-
-	srand((unsigned int)(time(nullptr)));
-
-	Item* _item[20] = {};
-
-	for (int i = 0; i < 20; ++i)
-	{
-		int ItemType = (rand() % 2) + 1;
-
-		switch (ItemType)
-		{
-		case IT_Weapon:
-			_item[i] = new Weapon();
-			break;
-		case IT_Armor:
-			_item[i] = new Armor();
-			break;
-		}
-	}
-
-	for (int i = 0; i < 20; ++i)
-	{
-		if (_item[i] == nullptr)
-		{
-			continue;
-		}
-		if ((_item[i]->ItemType )== IT_Weapon)
-		{
-			Weapon* weapon = (Weapon*)_item[i];
-			cout << "Weapon Damage : " << weapon->damage << endl;
-		}
-	}
+	Pet* pet = new Pet;
+	Knight knight1;
+	knight1.m_Hp = 200;
+	knight1.m_Pet = pet;
+	knight1.Level = 200;
 
 
-	for (int i = 0; i < 20; ++i)
-	{
-		if (_item[i] == nullptr)
-		{
-			continue;
-		}
-		delete _item[i];
-	}
+	Knight knight2 = knight1;
+
+	Knight knight3;
+	knight3 = knight1;
 
 }
