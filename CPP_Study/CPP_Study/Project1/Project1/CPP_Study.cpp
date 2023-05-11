@@ -2,15 +2,42 @@
 
 #include <deque>
 
+#include <map>
+
 using namespace std;
 
 int main()
 {
-	deque<int>dq (3, 1);
-	dq.push_back(1);
-	dq.push_back(2);
-	dq.push_front(1);
-	dq.push_front(2);
-	
+	map<int, int>mp;
 
+	srand(static_cast<unsigned int>(time(nullptr)));
+
+	for (int i = 0; i < 100000; ++i)
+	{
+		mp.insert(make_pair(i, i + 100));
+	}
+
+	for (int i = 0; i < 50000; ++i)
+	{
+		int RandIndex = rand() % 100000;
+
+		mp.erase(RandIndex);
+	}
+
+	map<int, int>::iterator mpf = mp.find(50000);
+	if (mpf != mp.end())
+	{
+		cout << mpf->second << endl;
+		cout << mp[50000] << endl;
+	}
+	else
+	{
+		cout << "없다" << endl;
+	}
+
+	mp.clear();
+	for (map<int, int>::iterator it = mp.begin(); it != mp.end(); ++it)
+	{
+		cout << it->second << endl;
+	}
 }
