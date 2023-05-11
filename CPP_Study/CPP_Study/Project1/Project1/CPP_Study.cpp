@@ -1,43 +1,37 @@
 ﻿#include <iostream>
-
-#include <deque>
-
-#include <map>
+#include<set>
 
 using namespace std;
 
 int main()
 {
-	map<int, int>mp;
+	set<int> S;
 
-	srand(static_cast<unsigned int>(time(nullptr)));
+	S.insert(10);
+	S.insert(20);
+	S.insert(30);
+	S.insert(40);
+	S.insert(50);
+	S.insert(60);
+	S.insert(70);
+	S.insert(80);
+	S.insert(90);
+	S.insert(100);
 
-	for (int i = 0; i < 100000; ++i)
+	S.erase(40);
+
+	set<int>::iterator SF = S.find(50);
+	if (SF != S.end())
 	{
-		mp.insert(make_pair(i, i + 100));
-	}
-
-	for (int i = 0; i < 50000; ++i)
-	{
-		int RandIndex = rand() % 100000;
-
-		mp.erase(RandIndex);
-	}
-
-	map<int, int>::iterator mpf = mp.find(50000);
-	if (mpf != mp.end())
-	{
-		cout << mpf->second << endl;
-		cout << mp[50000] << endl;
+		cout << "찾음" << endl;
 	}
 	else
 	{
-		cout << "없다" << endl;
+		cout << "못 찾음" << endl;
 	}
 
-	mp.clear();
-	for (map<int, int>::iterator it = mp.begin(); it != mp.end(); ++it)
+	for (set<int>::iterator it = S.begin(); it != S.end(); ++it)
 	{
-		cout << it->second << endl;
+		cout << *it << endl;
 	}
 }
