@@ -1,29 +1,44 @@
-#include <iostream>
-
-using namespace std;
-
 class FileSystem
 {
 public:
-	static FileSystem& Instance()
-	{
-		static FileSystem* _instance = new FileSystem();
-		return *_instance;
-	}
-	int a = 32;
+	static FileSystem& instance() {}
+	virtual ~FileSystem() {}
+	virtual char* readFile(char* path) = 0;
+	virtual void writeFile(char* path, char* constents) = 0;
 
 private:
-	FileSystem(){ }
-
+	FileSystem() {}
 };
 
-int main()
+class PS3FileSystem : public FileSystem
 {
-	FileSystem& fs1 = FileSystem::Instance();
-	FileSystem& fs2 = FileSystem::Instance();
-	cout << fs1.a << endl;
-	fs1.a = 5;
-	cout << fs1.a << endl;
-	cout << fs2.a << endl;
+	virtual char* readFile(char* path)
+	{
+		//
+	}
+	virtual void writeFile(char* path, char* contents)
+	{
+		//
+	}
+};
+class WiiFileSystem : public FileSystem
+{
+	virtual char* readFile(char* path)
+	{
+		//
+	}
+	virtual void writeFile(char* path, char* contents)
+	{
+		//
+	}
+};
 
+FileSystem& FileSystem::instance()
+{
+#if PLATFORM == PLAYSTATION3
+	static FileSystem* instance = new PS3FileSystem();
+#elif PLATFORM == WII
+	static FileSystem* instance = new WiiFileSystem();
+#endif
+	return *instance;
 }
