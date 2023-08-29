@@ -1,44 +1,15 @@
-class FileSystem
+class GameObject
 {
-public:
-	static FileSystem& instance() {}
-	virtual ~FileSystem() {}
-	virtual char* readFile(char* path) = 0;
-	virtual void writeFile(char* path, char* constents) = 0;
+protected:
+	Log& getLog() { return log_; }
 
 private:
-	FileSystem() {}
+	static Log& log_;
 };
-
-class PS3FileSystem : public FileSystem
+class Enemy : public GameObject
 {
-	virtual char* readFile(char* path)
+	void doSomething()
 	{
-		//
-	}
-	virtual void writeFile(char* path, char* contents)
-	{
-		//
+		getLog().write("IO canLog!");
 	}
 };
-class WiiFileSystem : public FileSystem
-{
-	virtual char* readFile(char* path)
-	{
-		//
-	}
-	virtual void writeFile(char* path, char* contents)
-	{
-		//
-	}
-};
-
-FileSystem& FileSystem::instance()
-{
-#if PLATFORM == PLAYSTATION3
-	static FileSystem* instance = new PS3FileSystem();
-#elif PLATFORM == WII
-	static FileSystem* instance = new WiiFileSystem();
-#endif
-	return *instance;
-}
