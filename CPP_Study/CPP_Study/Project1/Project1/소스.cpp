@@ -1,30 +1,53 @@
-#include <iostream>
-
-using namespace std;
-
-class Framebuffer
+class Scene
 {
 public:
-	Framebuffer()
+	Scene() : current_(buffer_[0]), next_(&buffers_[1]) {}
+	void draw()
 	{
-		clear();
+		next_->clear();
+		next_->draw(1, 1);
+		swap();
 	}
-	void clear()
-	{
-		for (int i = 0; i < WIDTH * HEIGHT; ++i)
-		{
-			pixels_[i] = WHITE;
-		}
-	}
-	void draw(int x, int y)
-	{
-		pixels_[(WIDTH * y) + x] = BLACK;
-	}
-	const char* getPixels() { return pixels_; }
+	Framebuffer& getBuffer(){returm * curerent)}
+	swap)
 
-private:
-	static const int WIDTH = 160;
-	static const int HEIGHT = 120;
 
-	char pixels_[WIDTH * HEIGHT];
 };
+while (true)
+{
+	double start = getCurrentIme();
+	processInput();
+	update();
+	render();
+	sleep(start + MS_PER_Frame - get CurrentTime());
+
+}
+
+double lastTime = getCurrentTime();
+while (true)
+{
+	double currnet = getCurrentTime();
+	double elapsed = crueent - lastTime;
+	processInput();
+	update(elapsed);
+	render();
+	lastTime = current;
+}
+
+double previous = getCurrentTime();
+double lag = 0.0;
+while (true)
+{
+	double current - getCurrentTime();
+	double elapsed = cureent - previous;
+	previous = current;
+	lag += elapsed;
+	processInput();
+
+	while (lag >= MS_PER_UPDATE)
+	{
+		update();
+		lag -= MS_PER_UPDATE;
+	}
+	render();
+}
