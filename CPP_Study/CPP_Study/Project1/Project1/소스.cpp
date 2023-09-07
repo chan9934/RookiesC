@@ -77,7 +77,7 @@ private:
 	}
 
 	int pop()
-	{
+	{a
 		assert(stackSize_ > 0);
 		return stack_[--stackSize_];
 	}
