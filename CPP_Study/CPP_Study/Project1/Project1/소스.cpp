@@ -1,12 +1,8 @@
 class Audio
 {
 public:
-	static void playSound(SoundId id, int volume);
-};
-
-enum SoundId
-{
-	a,
-	b,
-	c
+	virtual ~Audio() {}
+	virtual void playSound(int soundID) = 0;
+	virtual void stopSound(int soundID) = 0;
+	virtual void stopAllSounds() = 0;
 };
