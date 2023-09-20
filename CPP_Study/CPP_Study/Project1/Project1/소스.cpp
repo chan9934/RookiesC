@@ -1,34 +1,15 @@
-class Audio
+class Transform
 {
 public:
-	virtual ~Audio() {}
-	virtual void playSound(int soundID) = 0;
-	virtual void stopSound(int soundID) = 0;
-	virtual void stopAllSounds() = 0;
+	static Transform origin();
+	Transform combine(Transform& other);
 };
 
-class ConsoleAudio : public Audio
-{
-	virtual void playSound(int soundID)
-	{
-
-	}
-	virtual void stopSound(int soundID)
-	{
-
-	}
-	virtual void stopAllSounds()
-	{
-
-	}
-};
-
-class Locator
+class GraphNode
 {
 public:
-	static Audio* getAudio() { return service_; }
-	static void provide(Audio* service) { service_ = service; }
+	GraphNode(
 
 private:
-	static Audio* service_;
+	Mesh
 };
