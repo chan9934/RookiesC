@@ -1,15 +1,5 @@
-class Transform
+class Particle
 {
 public:
-	static Transform origin();
-	Transform combine(Transform& other);
-};
-
-class GraphNode
-{
-public:
-	GraphNode(
-
-private:
-	Mesh
+	Particle() : framesLeft
 };
