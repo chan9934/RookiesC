@@ -13,6 +13,8 @@ public:
 private:
 	double x_, y_;
 	Grid* grid_;
+	Unit* prev_;
+	Unit* next_;
 };
 
 class Grid
