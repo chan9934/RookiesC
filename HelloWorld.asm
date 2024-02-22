@@ -11,7 +11,7 @@ CMAIN:
     
    
    
-    PUSH 1
+    PUSH 1asdfsadf
     PUSH 2
     call MAX
     PRINT_DEC 8, rax
